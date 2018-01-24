@@ -1,5 +1,14 @@
 debug: true
 feign:
-  datamanage:
-    url:  http://127.0.0.1:8081/datamanage
-    device: /device/sell
+  datacache:
+   url: http://127.0.0.1:8081/output
+   snapshots:
+    path: /devices
+    p1: ids
+    p2: p2
+    p3: p3
+   deviceinfo:
+    path: /device
+    p1: id
+    p2: p2
+    p3: p3

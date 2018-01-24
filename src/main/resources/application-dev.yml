@@ -1,0 +1,5 @@
+debug: true
+feign:
+  datamanage:
+    url:  http://127.0.0.1:8081/datamanage
+    device: /device/sell

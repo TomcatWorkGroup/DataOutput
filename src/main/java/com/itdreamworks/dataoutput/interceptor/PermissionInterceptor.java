@@ -20,24 +20,26 @@ import java.lang.reflect.Method;
 public class PermissionInterceptor implements HandlerInterceptor {
     @Value("${token.user}")
     String userTokenName;
+    @Value("${account.loginurl}")
+    String loginUrl;
 
     @Autowired
     TokenService tokenService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        if(o instanceof HandlerMethod){
-            HandlerMethod method = (HandlerMethod)o;
+        if (o instanceof HandlerMethod) {
+            HandlerMethod method = (HandlerMethod) o;
             Permission permission = method.getMethodAnnotation(Permission.class);
-            if(null == permission || !permission.loginReqired())
+            if (null == permission || !permission.loginReqired())
                 return true;
-            else{
-                if(isLogin(request)){
+            else {
+                if (isLogin(request)) {
                     return true;
-                }else{
+                } else {
                     response.setCharacterEncoding("utf-8");
                     PrintWriter out = response.getWriter();
-                    out.print("{\"code\":0,\"msg\":\"token无效！\"}");
+                    out.print(String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"token无效！\"}", loginUrl));
                 }
             }
         }
@@ -56,12 +58,13 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
     /**
      * 判断一个方法是否需要登录
+     *
      * @param method
      * @return
      */
-    private boolean isLoginRequired(Method method){
+    private boolean isLoginRequired(Method method) {
         boolean result = true;
-        if(method.isAnnotationPresent(Permission.class)){
+        if (method.isAnnotationPresent(Permission.class)) {
             result = method.getAnnotation(Permission.class).loginReqired();
         }
         return result;

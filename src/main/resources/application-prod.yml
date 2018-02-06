@@ -1,13 +1,13 @@
 feign:
   datacache:
-   url: http://127.0.0.1:8081/output
+   url: http://127.0.0.1:8080/datacache
    snapshots:
-    path: /devices
+    path: /output/devices
     p1: ids
     p2: p2
     p3: p3
    deviceinfo:
-    path: /device
+    path: /output/device
     p1: id
     p2: p2
     p3: p3

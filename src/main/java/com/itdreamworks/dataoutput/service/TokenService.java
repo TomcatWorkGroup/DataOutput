@@ -11,7 +11,9 @@ public class TokenService {
     String userTokenName;
 
     public Cookie getUserToken(String userId){
-        return new Cookie(userTokenName,userId);
+        Cookie cookie = new Cookie(userTokenName,userId);
+        cookie.setPath("/");
+        return cookie;
     }
 
     public boolean verifyUserToken(Cookie tokenCookie){

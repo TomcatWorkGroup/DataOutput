@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface DataCacheFeignClinet {
 
     @RequestMapping(value = "${feign.datacache.snapshots.path}", method = RequestMethod.POST)
-    public String getDeviceSnapshots(@RequestParam(name = "ids") String p1);
+    String getDeviceSnapshots(@RequestParam(name = "ids") String p1);
 
     @RequestMapping(value = "${feign.datacache.deviceinfo.path}", method = RequestMethod.POST)
-    public String getDeviceInfo(@RequestParam(name = "id") String p1);
+    String getDeviceInfo(@RequestParam(name = "id") String p1);
 
 }

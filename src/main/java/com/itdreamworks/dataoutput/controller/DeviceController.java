@@ -24,8 +24,8 @@ public class DeviceController {
     }
 
     @Permission
-    @RequestMapping(value = "/device", method = RequestMethod.POST)
-    public String getDeviceInfo(@PathVariable(name = "id") String id) {
+    @RequestMapping(value = "/get", method = RequestMethod.POST)
+    public String getDeviceInfo(@RequestParam(name = "id") String id) {
         return client.getDeviceInfo(id);
     }
 }

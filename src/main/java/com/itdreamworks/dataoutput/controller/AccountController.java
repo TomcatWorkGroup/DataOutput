@@ -1,5 +1,6 @@
 package com.itdreamworks.dataoutput.controller;
 
+import com.itdreamworks.dataoutput.client.DeviceFeignClinet;
 import com.itdreamworks.dataoutput.service.EmployeeService;
 import com.itdreamworks.dataoutput.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class AccountController {
     @Autowired
     EmployeeService employeeService;
     @Autowired
+    DeviceFeignClinet client;
+    @Autowired
     TokenService tokenService;
 
     @PostMapping(value = "/login")
@@ -27,7 +30,10 @@ public class AccountController {
         String result ;
         if(password.equals(pass)){
             Cookie tokenCookie = tokenService.getUserToken(loginId);
-            result = "{\"code\":1,\"msg\":\"用户登录成功！\"}";
+            String devices = client.getSellDevices();
+            result = String.format(
+                    "{\"code\":1,\"msg\":\"用户登录成功！\",\"devices\":%s}",
+                    devices);
             response.addCookie(tokenCookie);
         }else{
             result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"用户名或密码错误！\"}",loginUrl);

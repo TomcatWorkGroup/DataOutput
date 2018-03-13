@@ -1,7 +1,7 @@
 package com.itdreamworks.dataoutput.controller;
 
 import com.itdreamworks.dataoutput.annotation.Permission;
-import com.itdreamworks.dataoutput.client.DataCacheFeignClinet;
+import com.itdreamworks.dataoutput.client.DataCacheFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class DeviceController {
     String str;
 
     @Autowired
-    DataCacheFeignClinet client;
+    DataCacheFeignClient client;
 
     @Permission
     @RequestMapping(value = "/snapshots", method = RequestMethod.POST)

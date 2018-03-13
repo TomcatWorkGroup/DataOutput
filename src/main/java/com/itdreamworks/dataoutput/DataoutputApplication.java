@@ -12,6 +12,15 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @EnableFeignClients
 public class DataoutputApplication extends SpringBootServletInitializer {
 
+//	@Bean
+//	public EmbeddedServletContainerCustomizer containerCustomizer(){
+//		return new EmbeddedServletContainerCustomizer() {
+//			@Override
+//			public void customize(ConfigurableEmbeddedServletContainer container) {
+//				container.setSessionTimeout(1800);//单位为S
+//			}
+//		};
+//	}
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(com.itdreamworks.dataoutput.DataoutputApplication.class);

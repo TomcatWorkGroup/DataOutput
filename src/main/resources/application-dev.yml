@@ -1,7 +1,7 @@
 debug: true
 feign:
   datacache:
-   url: http://127.0.0.7:8080/datacache
+   url: http://127.0.0.1:8080/datacache
    snapshots:
     path: /output/devices
     p1: ids
@@ -12,3 +12,5 @@ feign:
     p1: id
     p2: p2
     p3: p3
+  datamanage:
+    url: http://39.106.168.77:8081/datamanage

@@ -1,5 +1,6 @@
 package com.itdreamworks.dataoutput.service;
 
+import com.itdreamworks.dataoutput.entity.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,8 @@ public class TokenService {
     String userTokenName;
 
     public Cookie getUserToken(String userId){
-        Cookie cookie = new Cookie(userTokenName,userId);
+        Token token = Token.getInstance(userId);
+        Cookie cookie = new Cookie(userTokenName,token.getTokenString());
         cookie.setPath("/");
         return cookie;
     }

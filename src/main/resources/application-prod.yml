@@ -11,3 +11,5 @@ feign:
     p1: id
     p2: p2
     p3: p3
+  datamanage:
+    url: http://127.0.0.1:8081/datamanage

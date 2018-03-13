@@ -1,4 +1,4 @@
-package com.itdreamworks.systemmanage.entity;
+package com.itdreamworks.dataoutput.entity;
 
 import java.io.Serializable;
 import java.util.UUID;

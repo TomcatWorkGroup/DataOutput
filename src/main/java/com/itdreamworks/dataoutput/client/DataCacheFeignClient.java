@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @org.springframework.cloud.netflix.feign.FeignClient(name = "Test", url = "${feign.datacache.url}")
-public interface DataCacheFeignClinet {
+public interface DataCacheFeignClient {
 
     @RequestMapping(value = "${feign.datacache.snapshots.path}", method = RequestMethod.POST)
     String getDeviceSnapshots(@RequestParam(name = "ids") String p1);

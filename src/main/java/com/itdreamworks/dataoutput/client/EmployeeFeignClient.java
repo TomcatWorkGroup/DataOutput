@@ -4,13 +4,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@org.springframework.cloud.netflix.feign.FeignClient(name = "Test", url = "http://39.106.168.77:8081/datamanage")
-public interface EmployeeFeignClinet {
+@org.springframework.cloud.netflix.feign.FeignClient(name = "Test", url = "${feign.datamanage.url}")
+public interface EmployeeFeignClient {
+    @RequestMapping(value = "/employee/find", method = RequestMethod.POST)
+    String getEmployee(@RequestParam("loginId") String loginId);
 
-    @RequestMapping(value = "/employee/find", method = RequestMethod.GET)
-    String getSellDevices();
-
-    @RequestMapping(value = "/device/user", method = RequestMethod.POST)
-    String getUserDevices(@RequestParam("userId") int userId);
-
+    @RequestMapping(value = "/employee/devices", method = RequestMethod.POST)
+    String getDevices(@RequestParam("employeeId") int employeeId);
 }

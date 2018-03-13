@@ -9,4 +9,8 @@ public interface DeviceFeignClinet {
 
     @RequestMapping(value = "/device/sell", method = RequestMethod.GET)
     String getSellDevices();
+
+    @RequestMapping(value = "/device/user", method = RequestMethod.POST)
+    String getUserDevices(@RequestParam("userId") int userId);
+
 }

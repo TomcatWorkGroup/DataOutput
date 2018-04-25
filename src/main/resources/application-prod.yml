@@ -1,15 +1,24 @@
+web:
+  app:
+    gl: /home/java_server/dataoutput/app/gl/
 feign:
   datacache:
-   url: http://127.0.0.1:8080/datacache
-   snapshots:
-    path: /output/devices
-    p1: ids
-    p2: p2
-    p3: p3
-   deviceinfo:
-    path: /output/device
-    p1: id
-    p2: p2
-    p3: p3
+    url: http://127.0.0.1:8080
+    snapshots:
+      path: /output/devices
+      p1: ids
+      p2: p2
+      p3: p3
+    deviceinfo:
+      path: /output/device
+      p1: id
+      p2: p2
+      p3: p3
+    find:
+      path: /device/find
+      p1: ids
+    get:
+      path: /device/get
+      p1: id
   datamanage:
-    url: http://127.0.0.1:8081/datamanage
+    url: http://127.0.0.1:8081

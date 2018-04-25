@@ -15,6 +15,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         //注册自定义拦截器，添加拦截路径和排除拦截路径
         registry.addInterceptor(permissionInterceptor).addPathPatterns("/device/**");
+        registry.addInterceptor(permissionInterceptor).addPathPatterns("/bytedevice/**");
         super.addInterceptors(registry);
     }
 }

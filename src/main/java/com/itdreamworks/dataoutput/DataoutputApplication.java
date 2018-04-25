@@ -1,33 +1,25 @@
 package com.itdreamworks.dataoutput;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
 @ServletComponentScan(basePackages = "com.itdreamworks.dataoutput")
-@EnableFeignClients
-public class DataoutputApplication extends SpringBootServletInitializer {
+public class DataoutputApplication extends WebMvcConfigurerAdapter {
+	@Value("${web.app.gl}")
+	private String uploadPath;
 
-//	@Bean
-//	public EmbeddedServletContainerCustomizer containerCustomizer(){
-//		return new EmbeddedServletContainerCustomizer() {
-//			@Override
-//			public void customize(ConfigurableEmbeddedServletContainer container) {
-//				container.setSessionTimeout(1800);//单位为S
-//			}
-//		};
-//	}
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(com.itdreamworks.dataoutput.DataoutputApplication.class);
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		super.addResourceHandlers(registry);
+		registry.addResourceHandler("/app/gl/**").addResourceLocations(
+				"file:"+uploadPath);
 	}
 	public static void main(String[] args) {
-		SpringApplication application = new SpringApplication(com.itdreamworks.dataoutput.DataoutputApplication.class);
-		//application.addListeners(new ApplicationStartup());
-		application.run(args);
+		SpringApplication.run(DataoutputApplication.class, args);
 	}
 }

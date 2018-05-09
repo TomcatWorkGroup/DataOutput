@@ -1,6 +1,8 @@
 web:
   app:
     gl: /home/java_server/dataoutput/app/gl/
+  ssm:
+    file: /home/java_server/dataoutput/ssm/MoblieMessage.properties
 feign:
   datacache:
     url: http://127.0.0.1:8080
@@ -21,4 +23,8 @@ feign:
       path: /device/get
       p1: id
   datamanage:
-    url: http://127.0.0.1:8081
+    url: http://39.106.168.77:8081
+    employee:
+      path: ${feign.datamanage.url}/employee
+      create:
+        path: ${feign.datamanage.employee.path}/create

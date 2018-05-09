@@ -2,6 +2,8 @@ debug: true
 web:
   app:
     gl: D:/Github/abc/
+  ssm:
+    file: /home/java_server/dataoutput/ssm/MoblieMessage.properties
 feign:
   datacache:
     url: http://39.106.168.77:8080
@@ -23,3 +25,7 @@ feign:
       p1: id
   datamanage:
     url: http://39.106.168.77:8081
+    employee:
+      path: ${feign.datamanage.url}/employee
+      create:
+        path: ${feign.datamanage.employee.path}/create

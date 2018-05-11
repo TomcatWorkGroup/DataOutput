@@ -9,3 +9,6 @@ token:
 account:
   loginurl: dengludizhi
   logouturl: logouturl
+decoder:
+  des:
+    key: 12345678

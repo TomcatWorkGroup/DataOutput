@@ -7,6 +7,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itdreamworks.dataoutput.client.TemplateClient;
 import com.itdreamworks.dataoutput.config.SsmConfig;
 import com.itdreamworks.dataoutput.model.Result;
@@ -21,10 +22,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/register")
@@ -39,6 +37,8 @@ public class RegisterController {
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
     static final String accessKeyId = "LTAIf5XDtOqoSIgo";
     static final String accessKeySecret = "TsYsEk9UxpcqgbJWNdh5hgdNfU09YO";
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private SsmConfig ssmConfig;
     @Value("${feign.datamanage.employee.create.path}")
@@ -154,12 +154,9 @@ public class RegisterController {
             map.put("realName", realName);
             map.put("mobile", mobile);
             map.put("email", mobile);
+
             try {
-                if (client.post(map).equals("true")) {
-                    return "{\"code\":1}";
-                } else {
-                    return getErrorMsg("用户注册失败，请联系管理人员。");
-                }
+                return client.post(map);
             } catch (Exception ex) {
                 return getErrorMsg(ex.getMessage());
             }

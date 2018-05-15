@@ -37,10 +37,8 @@ public class AccountController {
             if(checkEmployeePassword(password,jsonObj.get("password"))){
                 if(checkEmployeeStatus(jsonObj)){
                     Integer id = Integer.parseInt(jsonObj.get("id").toString());
-                    String devices = employeeService.getDevices(id);
-                    result = String.format(
-                            "{\"code\":1,\"msg\":\"用户登录成功！\",\"devices\":%s}",
-                            devices);
+                    //String devices = employeeService.getDevices(id);
+                    result = "{\"code\":1,\"msg\":\"用户登录成功！\"}";
                     Cookie cookie = tokenService.getUserToken(id.toString());
                     response.addCookie(cookie);
                 }else {

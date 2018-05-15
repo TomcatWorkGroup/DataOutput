@@ -1,15 +1,16 @@
 package com.itdreamworks.dataoutput.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itdreamworks.dataoutput.client.TemplateClient;
+import com.itdreamworks.security.DeCoder;
+import feign.Feign;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
-import java.security.SecureRandom;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping(value = "/decoder")
@@ -17,21 +18,31 @@ public class DecoderController {
 
     @Value("${decoder.des.key}")
     private String desKey;
-    @GetMapping(value = "/des")
-    public  String decoderDES(String data) throws Exception{
-        // DES算法要求有一个可信任的随机数源
-        SecureRandom sr = new SecureRandom();
-        // 从原始密匙数据创建一个DESKeySpec对象
-        DESKeySpec dks = new DESKeySpec(desKey.getBytes("utf-8"));
-        // 创建一个密匙工厂，然后用它把DESKeySpec对象转换成一个SecretKey对象
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-        SecretKey securekey = keyFactory.generateSecret(dks);
-        // Cipher对象实际完成解密操作
-        Cipher cipher = Cipher.getInstance("DES");
-        // 用密匙初始化Cipher对象
-        cipher.init(Cipher.DECRYPT_MODE, securekey, sr);
-        // 正式执行解密操作
-        return new String(cipher.doFinal(convertHexString(data)));
+    @Value("${feign.datamanage.device.find.path}")
+    private String deviceFindPath;
+
+    @Autowired
+    ObjectMapper mapper;
+
+    @PostMapping(value = "/decode")
+    public  String decoderDES(@RequestParam("data") String data, Map<String, String> map) throws Exception{
+        String deviceNo = DeCoder.DeCode(data);
+        TemplateClient client =
+                Feign.builder().target(TemplateClient.class, deviceFindPath);
+        map.put("deviceNo",deviceNo);
+        String msg ;
+        try {
+            String jsonStr = client.post(map);
+            LinkedHashMap jsonObj = (LinkedHashMap)mapper.readValue(jsonStr,Object.class);
+            if(jsonObj.keySet().contains("deviceNo")) {
+                msg = String.format("{\"code\":1,\"deviceNo\":\"%s\",\"nickName\":\"%s\"}",jsonObj.get("deviceNo"),jsonObj.get("nickName"));
+            }else {
+                msg = "{\"code\":0,\"msg\":\"设备信息无效\"}";
+            }
+        } catch (Exception ex) {
+            msg = String.format("{\"code\":0,\"msg\":\"%s\",}",ex.getMessage());
+        }
+        return msg;
     }
 
     public static byte[] convertHexString(String ss)

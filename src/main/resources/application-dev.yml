@@ -25,6 +25,10 @@ feign:
       p1: id
   datamanage:
     url: http://39.106.168.77:8081
+    device:
+      path: ${feign.datamanage.url}/device
+      find:
+        path: ${feign.datamanage.device.path}/find
     employee:
       path: ${feign.datamanage.url}/employee
       create:

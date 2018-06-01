@@ -2,13 +2,10 @@ server:
   port: 8082
 spring:
   profiles:
-    active: prod
+    active: dev
 token:
   user: userToken
   resource: rescToken
 account:
   loginurl: dengludizhi
   logouturl: logouturl
-decoder:
-  des:
-    key: a@9*!ap%

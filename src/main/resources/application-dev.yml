@@ -29,6 +29,8 @@ feign:
       path: ${feign.datamanage.url}/device
       find:
         path: ${feign.datamanage.device.path}/find
+      deviceNo:
+        path: ${feign.datamanage.device.path}/no
     employee:
       path: ${feign.datamanage.url}/employee
       create:

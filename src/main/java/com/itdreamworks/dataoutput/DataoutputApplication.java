@@ -1,5 +1,6 @@
 package com.itdreamworks.dataoutput;
 
+import com.itdreamworks.security.DeCoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +20,8 @@ public class DataoutputApplication extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/app/gl/**").addResourceLocations(
 				"file:"+uploadPath);
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		SpringApplication.run(DataoutputApplication.class, args);
+		//System.out.println(DeCoder.DeCode("858878e888"));
 	}
 }

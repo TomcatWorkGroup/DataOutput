@@ -28,40 +28,40 @@ public class AccountController {
 
     @PostMapping(value = "/login")
     public String login(HttpServletResponse response, @RequestParam(name = "loginId") String loginId, @RequestParam(name = "password") String password) throws IOException {
-        String result ;
+        String result;
         String str = employeeService.getEmployee(loginId);
-        if(str.isEmpty()){
-            result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"用户名或密码错误！\"}",loginUrl);
-        }else{
+        if (str.isEmpty()) {
+            result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"用户名或密码错误！\"}", loginUrl);
+        } else {
             LinkedHashMap jsonObj = (LinkedHashMap) mapper.readValue(str, Object.class);
-            if(checkEmployeePassword(password,jsonObj.get("password"))){
-                if(checkEmployeeStatus(jsonObj)){
+            if (checkEmployeePassword(password, jsonObj.get("password"))) {
+                if (checkEmployeeStatus(jsonObj)) {
                     Integer id = Integer.parseInt(jsonObj.get("id").toString());
                     //String devices = employeeService.getDevices(id);
                     result = "{\"code\":1,\"msg\":\"用户登录成功！\"}";
                     Cookie cookie = tokenService.getUserToken(id.toString());
                     response.addCookie(cookie);
-                }else {
-                    result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"当前用户被禁用，无法登录系统！\"}",loginUrl);
+                } else {
+                    result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"当前用户被禁用，无法登录系统！\"}", loginUrl);
                 }
-            }else {
-                result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"用户名或密码错误！\"}",loginUrl);
+            } else {
+                result = String.format("{\"code\":0,\"login\":\"%s\",\"msg\":\"用户名或密码错误！\"}", loginUrl);
             }
         }
         return result;
     }
 
     @GetMapping(value = "/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
 
         return "";
     }
 
-    private boolean checkEmployeeStatus(LinkedHashMap map){
+    private boolean checkEmployeeStatus(LinkedHashMap map) {
         return map.get("status").equals(1);
     }
 
-    private boolean checkEmployeePassword(String inputPassword,Object password){
+    private boolean checkEmployeePassword(String inputPassword, Object password) {
         return null != inputPassword && !inputPassword.isEmpty() && inputPassword.equals(password);
     }
 }

@@ -3,7 +3,7 @@ package com.itdreamworks.dataoutput.entity;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Token implements Serializable{
+public class Token implements Serializable {
     public String getTokenString() {
         return tokenString;
     }
@@ -16,10 +16,10 @@ public class Token implements Serializable{
 
     private String identity;
 
-    private Token(){
+    private Token() {
     }
 
-    public static Token getInstance(String identity){
+    public static Token getInstance(String identity) {
         Token token = new Token();
         token.identity = identity;
         token.tokenString = UUID.randomUUID().toString();

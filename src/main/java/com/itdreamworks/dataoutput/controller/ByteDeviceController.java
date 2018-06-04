@@ -24,25 +24,25 @@ public class ByteDeviceController {
     private String getDevicePath;
 
     @RequestMapping(value = "/find", method = RequestMethod.POST)
-    public void findDevices(@RequestParam(name = "ids") String ids, Map<String,String> map, HttpServletResponse response) {
+    public void findDevices(@RequestParam(name = "ids") String ids, Map<String, String> map, HttpServletResponse response) {
         TemplateClient client =
-                Feign.builder().target(TemplateClient.class, String.format("%s%s",baseUrl,findDevicesPath));
+                Feign.builder().target(TemplateClient.class, String.format("%s%s", baseUrl, findDevicesPath));
 
-        map.put("ids",ids);
+        map.put("ids", ids);
         byte[] data = client.getBytes(map);
-        outputData(data,response);
+        outputData(data, response);
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
-    public void getDevice(@RequestParam(name = "id") String id,Map<String,String> map, HttpServletResponse response) {
+    public void getDevice(@RequestParam(name = "id") String id, Map<String, String> map, HttpServletResponse response) {
         TemplateClient client =
-                Feign.builder().target(TemplateClient.class, String.format("%s%s",baseUrl,getDevicePath));
-        map.put("id",id);
+                Feign.builder().target(TemplateClient.class, String.format("%s%s", baseUrl, getDevicePath));
+        map.put("id", id);
         byte[] data = client.getBytes(map);
-        outputData(data,response);
+        outputData(data, response);
     }
 
-    private void outputData(byte[] data,HttpServletResponse response){
+    private void outputData(byte[] data, HttpServletResponse response) {
         try {
             ServletOutputStream stream = response.getOutputStream();
             stream.write(data);

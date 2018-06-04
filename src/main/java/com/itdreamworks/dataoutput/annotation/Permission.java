@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 public @interface Permission {
     /**
      * 是否需要登录，缺省为需要
+     *
      * @return
      */
     boolean loginReqired() default true;

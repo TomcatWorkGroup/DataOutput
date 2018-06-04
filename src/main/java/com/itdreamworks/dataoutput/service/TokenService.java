@@ -11,15 +11,15 @@ public class TokenService {
     @Value("${token.user}")
     String userTokenName;
 
-    public Cookie getUserToken(String userId){
+    public Cookie getUserToken(String userId) {
         Token token = Token.getInstance(userId);
-        Cookie cookie = new Cookie(userTokenName,token.getTokenString());
+        Cookie cookie = new Cookie(userTokenName, token.getTokenString());
         cookie.setPath("/");
         return cookie;
     }
 
-    public boolean verifyUserToken(Cookie tokenCookie){
-        if(null == tokenCookie)
+    public boolean verifyUserToken(Cookie tokenCookie) {
+        if (null == tokenCookie)
             return false;
         return true;
     }

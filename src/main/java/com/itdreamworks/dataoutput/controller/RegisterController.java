@@ -32,7 +32,7 @@ public class RegisterController {
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
 
-    private static final String MOBILE_NUMBER="mobile";
+    private static final String MOBILE_NUMBER = "mobile";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
     static final String accessKeyId = "LTAIf5XDtOqoSIgo";
@@ -148,8 +148,8 @@ public class RegisterController {
         if (code != null && validCode.equals(code)) {
             TemplateClient client =
                     Feign.builder().target(TemplateClient.class, createEmployeePath);
-            map.put("orgType","0");
-            map.put("orgId","10");
+            map.put("orgType", "0");
+            map.put("orgId", "10");
             map.put("password", password);
             map.put("realName", realName);
             map.put("mobile", mobile);

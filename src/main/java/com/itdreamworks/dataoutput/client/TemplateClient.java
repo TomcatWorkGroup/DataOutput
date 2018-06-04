@@ -8,18 +8,19 @@ import java.util.Map;
 public interface TemplateClient {
     @RequestLine("GET")
     String get();
+
     @RequestLine("GET")
-    String get(@QueryMap Map<String,String> map);
+    String get(@QueryMap Map<String, String> map);
 
     @RequestLine("POST")
     String post();
 
     @RequestLine("POST")
-    String post(@QueryMap Map<String,String> map);
+    String post(@QueryMap Map<String, String> map);
 
     @RequestLine("POST")
     byte[] getBytes();
 
     @RequestLine("POST")
-    byte[] getBytes(@QueryMap Map<String,String> map);
+    byte[] getBytes(@QueryMap Map<String, String> map);
 }

@@ -2,11 +2,10 @@ package com.itdreamworks.dataoutput.model;
 
 import java.io.Serializable;
 
-public class Result implements Serializable
-{
+public class Result implements Serializable {
 
     public static final int RESULTCODE_SUCCESS = 1;
-    public static final int RESULTCODE_FAILD =0;
+    public static final int RESULTCODE_FAILD = 0;
 
     private String msg;
     private int code;

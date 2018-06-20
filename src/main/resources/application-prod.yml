@@ -32,3 +32,7 @@ feign:
       path: ${feign.datamanage.url}/employee
       create:
         path: ${feign.datamanage.employee.path}/create
+      find:
+        path: ${feign.datamanage.employee.path}/find
+      changePassword:
+        path: ${feign.datamanage.employee.path}/changePassword

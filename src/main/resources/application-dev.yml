@@ -3,7 +3,7 @@ web:
   app:
     gl: D:/Github/abc/
   ssm:
-    file: /home/java_server/dataoutput/ssm/MoblieMessage.properties
+    file: D:/Github/abc/MoblieMessage.properties
 feign:
   datacache:
     url: http://39.106.168.77:8080
@@ -33,3 +33,7 @@ feign:
       path: ${feign.datamanage.url}/employee
       create:
         path: ${feign.datamanage.employee.path}/create
+      find:
+        path: ${feign.datamanage.employee.path}/find
+      changePassword:
+        path: ${feign.datamanage.employee.path}/changePassword

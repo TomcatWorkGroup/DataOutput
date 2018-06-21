@@ -29,13 +29,13 @@ public class DecoderController {
         String deviceNo = DeCoder.DeCode(data);
         TemplateClient client =
                 Feign.builder().target(TemplateClient.class, deviceFindPath);
-        map.put("deviceNo",deviceNo);
+        map.put("id",deviceNo);
         String msg ;
         try {
             String jsonStr = client.post(map);
             LinkedHashMap jsonObj = (LinkedHashMap)mapper.readValue(jsonStr,Object.class);
             if(jsonObj.keySet().contains("deviceNo")) {
-                msg = String.format("{\"code\":1,\"deviceNo\":\"%s\",\"nickName\":\"%s\"}",jsonObj.get("deviceNo"),jsonObj.get("nickName"));
+                msg = String.format("{\"code\":1,\"deviceNo\":\"%s\",\"nickName\":\"%s\",\"deviceSuffix\":\"%s\",\"deviceType\":\"%s\"}",jsonObj.get("deviceNo"),jsonObj.get("nickName"),jsonObj.get("deviceSuffix"),jsonObj.get("deviceType"));
             }else {
                 msg = "{\"code\":0,\"msg\":\"设备信息无效\"}";
             }

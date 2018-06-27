@@ -25,34 +25,35 @@ public class DecoderController {
     ObjectMapper mapper;
 
     @PostMapping(value = "/decode")
-    public  String decoderDES(@RequestParam("data") String data, Map<String, String> map) throws Exception{
+    public String decoderDES(@RequestParam("data") String data, Map<String, String> map) throws Exception {
         String deviceNo = DeCoder.DeCode(data);
         TemplateClient client =
                 Feign.builder().target(TemplateClient.class, deviceFindPath);
-        map.put("id",deviceNo);
-        String msg ;
+        map.put("id", deviceNo);
+        String msg;
         try {
             String jsonStr = client.post(map);
-            LinkedHashMap jsonObj = (LinkedHashMap)mapper.readValue(jsonStr,Object.class);
-            if(jsonObj.keySet().contains("deviceNo")) {
-                msg = String.format("{\"code\":1,\"deviceNo\":\"%s\",\"nickName\":\"%s\",\"deviceSuffix\":\"%s\",\"deviceType\":\"%s\"}",jsonObj.get("deviceNo"),jsonObj.get("nickName"),jsonObj.get("deviceSuffix"),jsonObj.get("deviceType"));
-            }else {
+            if (jsonStr.isEmpty()) {
+                return "{\"code\":0,\"msg\":\"无法获取编号对应的设备\"}";
+            }
+            LinkedHashMap jsonObj = (LinkedHashMap) mapper.readValue(jsonStr, Object.class);
+            if (jsonObj.keySet().contains("deviceNo")) {
+                msg = String.format("{\"code\":1,\"deviceNo\":\"%s\",\"nickName\":\"%s\",\"deviceSuffix\":\"%s\",\"deviceType\":\"%s\"}", jsonObj.get("deviceNo"), jsonObj.get("nickName"), jsonObj.get("deviceSuffix"), jsonObj.get("deviceType"));
+            } else {
                 msg = "{\"code\":0,\"msg\":\"设备信息无效\"}";
             }
         } catch (Exception ex) {
-            msg = String.format("{\"code\":0,\"msg\":\"%s\",}",ex.getMessage());
+            msg = String.format("{\"code\":0,\"msg\":\"%s\",}", ex.getMessage());
         }
         return msg;
     }
 
-    public static byte[] convertHexString(String ss)
-    {
+    public static byte[] convertHexString(String ss) {
         byte digest[] = new byte[ss.length() / 2];
-        for(int i = 0; i < digest.length; i++)
-        {
+        for (int i = 0; i < digest.length; i++) {
             String byteString = ss.substring(2 * i, 2 * i + 2);
             int byteValue = Integer.parseInt(byteString, 16);
-            digest[i] = (byte)byteValue;
+            digest[i] = (byte) byteValue;
         }
         return digest;
     }
